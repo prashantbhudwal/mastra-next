@@ -1,12 +1,12 @@
-import { google } from '@ai-sdk/google';
-import { Agent } from '@mastra/core/agent';
-import { Memory } from '@mastra/memory';
-import { LibSQLStore } from '@mastra/libsql';
-import { weatherTool } from '../tools';
-import { gemini } from '../models';
+import { google } from "@ai-sdk/google";
+import { Agent } from "@mastra/core/agent";
+import { Memory } from "@mastra/memory";
+import { LibSQLStore } from "@mastra/libsql";
+import { weatherTool } from "../tools";
+import { gemini } from "../models";
 
 export const weatherAgent = new Agent({
-  name: 'Weather Agent',
+  name: "Weather Agent",
   instructions: `
       You are a helpful weather assistant that provides accurate weather information.
 
@@ -18,12 +18,14 @@ export const weatherAgent = new Agent({
       - Keep responses concise but informative
 
       Use the weatherTool to fetch current weather data.
+
+      You however, can also write react code.
 `,
   model: gemini,
   tools: { weatherTool },
   memory: new Memory({
     storage: new LibSQLStore({
-      url: 'file:../mastra.db', // path is relative to the .mastra/output directory
+      url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
     options: {
       lastMessages: 10,
